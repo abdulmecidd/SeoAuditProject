@@ -16,3 +16,10 @@ except gspread.exceptions.SpreadsheetNotFound:
     sh = gc.create(sh_name)
     worksheet = sh.sheet1
 
+# create the table and headers
+headers = ["URL", "Title Tags", "Meta Description", "H1 Tags", "H2-H6 Tags", "Breadcrumbs", "Internal Linking", "Structured Data", "Social Media Tags", "Canonical URLs" "Www Vs. Non-www", "Http:// vs Https://", "Proper HTTP Status Code"]
+header_range = "A1:N1"
+worksheet.update(header_range, [headers])
+worksheet.format(header_range, {"horizontalAlignment": "Center", "textFormat": {"bold": True}})
+
+
