@@ -34,7 +34,6 @@ def scrape_url(url, worksheet):
 
     if title_tag:
         row.append("yes")
-
     else:
         row.append("no")
 
@@ -73,20 +72,22 @@ def scrape_url(url, worksheet):
     row.append('no') if len(row) == 1 else None    
 
     parsed_url = urlparse(url)
+    
     if parsed_url.netloc.startswith("www."):
-        row.append("URL starts with www")
+        row.append("www")
     else:
         row.append("None www")
     
-    if parsed_url.netloc.startswith("https://"):
-        row.append("URL starts with https://")
+    if parsed_url.scheme.startswith("https"):
+        row.append("https://")
     else:
-        row.append("Url starts with http://")
+        row.append("http://")
 
     row.append(response.status_code)
 
     worksheet.append_row(row)
     print(row)
+    print(parsed_url)
 
 #function to scrape all URLs in the sitemap and its sub-sitemaps
 
