@@ -57,5 +57,22 @@ def scrape_url(url, worksheet):
     else:
         row.append("no")
 
-    
+    worksheet.append_row(row)
+
+#function to scrape all URLs in the sitemap and its sub-sitemaps
+
+def scrape_sitemap(sitemap_url, worksheet):
+    response = requests.get(sitemap_url)
+    sitemap_content = response.text
+    sitemap_xml = ET.fromstring(sitemap_content)
+
+    for element in sitemap_xml.findall('.//{http://www.sitemaps.org/schemas/sitemap/0.9}sitemap/{http://www.sitemaps.org/schemas/sitemap/0.9}loc'):
+        alt_sitemap_url = element.text
+        scrape_sitemap(alt_sitemap_url, worksheet)
+
+    for element in sitemap_xml.findall('.//{http://www.sitemaps.org/schemas/sitemap/0.9}sitemap/{http://www.sitemaps.org/schemas/sitemap/0.9}loc'):
+        url = element.text
+        scrape_url(url, worksheet)
+
+
 
