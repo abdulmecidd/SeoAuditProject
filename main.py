@@ -3,6 +3,7 @@ import xml.etree.ElementTree as ET
 import gspread
 from bs4 import BeautifulSoup
 from urllib.parse import urlparse
+import csv
 
 sitemap_url = input('What is the sitemap URL of your website? \n')
 
@@ -38,6 +39,7 @@ else:
 
             if title_tag:
                 row.append("yes")
+                
             else:
                 row.append("no")
 
@@ -112,6 +114,10 @@ else:
 
         scrape_sitemap(sitemap_url, worksheet)
 
-        print("scraping is complete!")
+        with open(sh_name, 'w', newline='') as f:
+            writer = csv.writer(f)
+            writer.writerows(worksheet.get_all_values())
+
+        print("scraping and downloading are complete!")
     else:
         print("Please entry a value!")
